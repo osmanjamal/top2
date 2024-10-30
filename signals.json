@@ -1,0 +1,98 @@
+{
+    "signals": [
+        {
+            "signal_id": "s1",
+            "signal_time": "2024-01-15T10:30:00Z",
+            "symbol": "BTCUSDT",
+            "action": "BUY",
+            "entry": 43250.50,
+            "tp": 43500.00,
+            "sl": 43000.00,
+            "qty": 0.05,
+            "leverage": 10,
+            "status": "EXECUTED",
+            "result": {
+                "exit_price": 43500.00,
+                "exit_time": "2024-01-15T11:45:00Z",
+                "pnl_percent": 0.58,
+                "pnl_usdt": 12.45
+            }
+        },
+        {
+            "signal_id": "s2",
+            "signal_time": "2024-01-15T14:15:00Z",
+            "symbol": "ETHUSDT",
+            "action": "SELL",
+            "entry": 2580.75,
+            "tp": 2550.00,
+            "sl": 2600.00,
+            "qty": 0.15,
+            "leverage": 10,
+            "status": "EXECUTED",
+            "result": {
+                "exit_price": 2550.00,
+                "exit_time": "2024-01-15T15:30:00Z",
+                "pnl_percent": 1.19,
+                "pnl_usdt": 4.61
+            }
+        },
+        {
+            "signal_id": "s3",
+            "signal_time": "2024-01-15T16:45:00Z",
+            "symbol": "BNBUSDT",
+            "action": "BUY",
+            "entry": 312.50,
+            "tp": 315.00,
+            "sl": 310.00,
+            "qty": 0.5,
+            "leverage": 10,
+            "status": "ACTIVE",
+            "result": null
+        },
+        {
+            "signal_id": "s4",
+            "signal_time": "2024-01-15T19:20:00Z",
+            "symbol": "BTCUSDT",
+            "action": "SELL",
+            "entry": 43800.25,
+            "tp": 43500.00,
+            "sl": 44000.00,
+            "qty": 0.03,
+            "leverage": 10,
+            "status": "PENDING",
+            "result": null
+        },
+        {
+            "signal_id": "s5",
+            "signal_time": "2024-01-15T20:05:00Z",
+            "symbol": "DOGEUSDT",
+            "action": "BUY",
+            "entry": 0.0825,
+            "tp": 0.0835,
+            "sl": 0.0815,
+            "qty": 1000,
+            "leverage": 10,
+            "status": "EXECUTED",
+            "result": {
+                "exit_price": 0.0815,
+                "exit_time": "2024-01-15T20:45:00Z",
+                "pnl_percent": -1.21,
+                "pnl_usdt": -1.00
+            }
+        }
+    ],
+    "statistics": {
+        "total_signals": 5,
+        "executed_signals": 3,
+        "pending_signals": 1,
+        "active_signals": 1,
+        "winning_trades": 2,
+        "losing_trades": 1,
+        "win_rate": 66.67,
+        "total_pnl_usdt": 16.06,
+        "best_trade_pnl": 12.45,
+        "worst_trade_pnl": -1.00,
+        "average_trade_duration_minutes": 75
+    },
+    "last_updated": "2024-01-15T20:45:00Z"
+}

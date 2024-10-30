@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect Exchange API</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        #validationStatus {
+            display: none;
+        }
+        #validationStatus.success {
+            display: flex;
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+        }
+        #validationStatus.error {
+            display: flex;
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-[#1a1f2e] text-white">
+    <!-- Main Content Area -->
+    <div class="flex">
+        <!-- Left Sidebar -->
+        <div class="w-64 bg-[#1c2c4f] min-h-screen p-4">
+            <div class="space-y-4">
+                <div class="flex items-center space-x-3 p-2 hover:bg-gray-700 rounded cursor-pointer">
+                    <i data-lucide="activity"></i>
+                    <span>Dashboard</span>
+                </div>
+                <div class="flex items-center space-x-3 p-2 bg-gray-700 rounded cursor-pointer">
+                    <i data-lucide="key"></i>
+                    <span>API Connection</span>
+                </div>
+                <div class="flex items-center space-x-3 p-2 hover:bg-gray-700 rounded cursor-pointer">
+                    <i data-lucide="settings"></i>
+                    <span>Settings</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-6">
+            <!-- Header -->
+            <div class="mb-8">
+                <h1 class="text-2xl font-semibold mb-2">Connect Exchange</h1>
+                <p class="text-gray-400">Connect your exchange account to start trading</p>
+            </div>
+
+            <!-- Security Notice -->
+            <div class="bg-[#2d4a7c] rounded-lg p-4 mb-8 flex items-start space-x-4">
+                <i data-lucide="shield" class="w-6 h-6 text-emerald-500 flex-shrink-0"></i>
+                <div>
+                    <h3 class="font-medium mb-1">Your Security is Our Priority</h3>
+                    <p class="text-gray-400 text-sm">
+                        All API keys are encrypted and stored securely. We never have access to your funds.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Connection Steps -->
+            <div class="bg-[#1c2c4f] rounded-lg p-6 mb-8">
+                <h3 class="text-lg font-medium mb-4 flex items-center justify-between">
+                    Connect keys securely
+                    <a href="#" class="text-sm text-emerald-500 hover:text-emerald-400 flex items-center">
+                        View Guide 
+                        <i data-lucide="external-link" class="w-4 h-4 ml-1"></i>
+                    </a>
+                </h3>
+
+                <div class="space-y-6">
+                    <!-- IP Whitelist -->
+                    <div>
+                        <p class="text-sm text-gray-400 mb-2">
+                            1. Add these IP addresses to your API key whitelist
+                        </p>
+                        <div class="flex items-center bg-[#2d4a7c] rounded p-3">
+                            <code class="flex-1 font-mono">64.202.96.0/24</code>
+                            <button onclick="copyToClipboard('64.202.96.0/24')" class="p-1 hover:bg-[#3d5a8c] rounded">
+                                <i data-lucide="copy" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- API Form -->
+                    <div class="space-y-4">
+                        <p class="text-sm text-gray-400">
+                            2. Enter your API credentials
+                        </p>
+
+                        <!-- Exchange Selection -->
+                        <div>
+                            <label class="block text-sm mb-2">Exchange</label>
+                            <select class="w-full bg-[#2d4a7c] border border-gray-700 rounded-lg px-4 py-3">
+                                <option value="binance">Binance</option>
+                                <option value="binance_futures">Binance Futures</option>
+                            </select>
+                        </div>
+
+                        <!-- API Key -->
+                        <div>
+                            <label class="block text-sm mb-2">API Key</label>
+                            <div class="relative">
+                                <input 
+                                    type="text"
+                                    class="w-full bg-[#2d4a7c] border border-gray-700 rounded-lg px-4 py-3"
+                                    placeholder="Enter your API key"
+                                />
+                            </div>
+                        </div>
+
+                        <!-- API Secret -->
+                        <div>
+                            <label class="block text-sm mb-2">API Secret</label>
+                            <div class="relative">
+                                <input 
+                                    type="password"
+                                    id="apiSecret"
+                                    class="w-full bg-[#2d4a7c] border border-gray-700 rounded-lg px-4 py-3 pr-10"
+                                    placeholder="Enter your API secret"
+                                />
+                                <button 
+                                    onclick="toggleApiSecret()"
+                                    class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-300"
+                                >
+                                    <i data-lucide="eye" id="toggleApiSecretIcon" class="w-5 h-5"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Required Permissions -->
+                    <div class="bg-[#2d4a7c] rounded-lg p-4">
+                        <h4 class="font-medium mb-3">Required API Permissions</h4>
+                        <div class="space-y-2">
+                            <div class="flex items-center space-x-2 text-sm">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-emerald-500"></i>
+                                <span class="text-gray-300">Read Information</span>
+                            </div>
+                            <div class="flex items-center space-x-2 text-sm">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-emerald-500"></i>
+                                <span class="text-gray-300">Spot & Margin Trading</span>
+                            </div>
+                            <div class="flex items-center space-x-2 text-sm">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-emerald-500"></i>
+                                <span class="text-gray-300">Futures Trading</span>
+                            </div>
+                            <div class="flex items-center space-x-2 text-sm">
+                                <i data-lucide="x-circle" class="w-4 h-4 text-gray-500"></i>
+                                <span class="text-gray-500">Withdraw</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Validation Status -->
+                    <div id="validationStatus" class="rounded-lg p-4">
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="check-circle" class="w-5 h-5"></i>
+                            <span id="validationMessage"></span>
+                        </div>
+                    </div>
+
+                    <!-- Connect Button -->
+                    <button 
+                        onclick="validateConnection()"
+                        class="w-full bg-emerald-600 hover:bg-emerald-700 py-3 rounded-lg font-medium"
+                    >
+                        Connect Exchange
+                    </button>
+                </div>
+            </div>
+
+            <!-- Connected APIs -->
+            <div class="bg-[#1c2c4f] rounded-lg p-6">
+                <h3 class="text-lg font-medium mb-4">Connected APIs</h3>
+                
+                <div class="space-y-4">
+                    <!-- Binance Futures API -->
+                    <div class="flex items-center justify-between p-4 bg-[#2d4a7c] rounded-lg">
+                        <div class="flex items-center space-x-4">
+                            <i data-lucide="key" class="w-5 h-5 text-gray-400"></i>
+                            <div>
+                                <h4 class="font-medium">Binance Futures</h4>
+                                <p class="text-sm text-gray-400">Last used: 2 hours ago</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <span class="px-3 py-1 rounded-full text-xs bg-green-500/20 text-green-400">
+                                Active
+                            </span>
+                            <button class="p-2 hover:bg-[#3d5a8c] rounded-lg">
+                                <i data-lucide="alert-circle" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Binance Spot API -->
+                    <div class="flex items-center justify-between p-4 bg-[#2d4a7c] rounded-lg">
+                        <div class="flex items-center space-x-4">
+                            <i data-lucide="key" class="w-5 h-5 text-gray-400"></i>
+                            <div>
+                                <h4 class="font-medium">Binance Spot</h4>
+                                <p class="text-sm text-gray-400">Last used: 1 day ago</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <span class="px-3 py-1 rounded-full text-xs bg-yellow-500/20 text-yellow-400">
+                                Update Required
+                            </span>
+                            <button class="p-2 hover:bg-[#3d5a8c] rounded-lg">
+                                <i data-lucide="alert-circle" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Toggle API Secret visibility
+        function toggleApiSecret() {
+            const input = document.getElementById('apiSecret');
+            const icon = document.getElementById('toggleApiSecretIcon');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.setAttribute('data-lucide', 'eye-off');
+            } else {
+                input.type = 'password';
+                icon.setAttribute('data-lucide', 'eye');
+            }
+            lucide.createIcons();
+        }
+
+        // Copy to clipboard function
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text);
+        }
+
+        // Validate connection
+        function validateConnection() {
+            const status = document.getElementById('validationStatus');
+            const message = document.getElementById('validationMessage');
+            
+            status.classList.add('success');
+            message.textContent = 'API connected successfully';
+        }
+    </script>
+</body>
+</html>

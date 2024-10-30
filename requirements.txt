@@ -1,0 +1,4 @@
+Flask==3.0.3
+pandas==2.2.3
+python_binance==1.0.19
+python_binance==1.0.22

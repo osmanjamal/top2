@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signals List</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="min-h-screen bg-[#1a1f2e] text-white">
+    <!-- Header -->
+    <div class="border-b border-gray-800 p-4">
+        <div class="flex justify-between items-center">
+            <h1 class="text-xl">List of signals</h1>
+            
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <button class="px-4 py-2 bg-[#1c2c4f] rounded flex items-center">
+                        All Bots
+                        <i data-lucide="chevron-down" class="w-4 h-4 ml-2"></i>
+                    </button>
+                </div>
+                
+                <div class="flex">
+                    <button class="px-6 py-2 bg-[#1c2c4f] rounded-l">
+                        Bots
+                    </button>
+                    <button class="px-6 py-2 bg-transparent rounded-r">
+                        Signals
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="overflow-x-auto">
+        <table class="w-full">
+            <thead>
+                <tr class="text-left text-gray-400 text-sm">
+                    <th class="p-4">Bot</th>
+                    <th class="p-4">Signal</th>
+                    <th class="p-4">Trigger time</th>
+                    <th class="p-4">Trigger price</th>
+                    <th class="p-4">Signal status</th>
+                    <th class="p-4">Price</th>
+                    <th class="p-4">Size</th>
+                    <th class="p-4">Order status</th>
+                    <th class="p-4">Order time</th>
+                </tr>
+            </thead>
+            <tbody class="text-sm">
+                <!-- Signal Row 1 -->
+                <tr class="border-t border-gray-800 hover:bg-[#1c2c4f]">
+                    <td class="p-4">
+                        <div class="flex items-center space-x-2">
+                            <span>🔵</span>
+                            <span>BTC LOWER</span>
+                            <div class="flex items-center space-x-1">
+                                <img src="/exchange-icon.png" class="w-4 h-4" alt="Exchange">
+                                <span class="bg-amber-500/30 text-amber-500 px-1 rounded text-xs">
+                                    x19
+                                </span>
+                                <i data-lucide="info" class="w-4 h-4 text-gray-500"></i>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="p-4">
+                        <span class="px-2 py-1 rounded bg-green-500/20 text-green-400">
+                            Buy
+                        </span>
+                    </td>
+                    <td class="p-4">
+                        <div>
+                            <div>2:16:01 AM</div>
+                            <div class="text-gray-500">10/26/2024</div>
+                        </div>
+                    </td>
+                    <td class="p-4">67258.5 USDT</td>
+                    <td class="p-4">
+                        <span class="text-teal-400">Completed</span>
+                    </td>
+                    <td class="p-4">67292 USDT</td>
+                    <td class="p-4">
+                        <div>
+                            <div>0.004 BTCUSDT</div>
+                            <div class="text-gray-500">269.168024 USDT</div>
+                        </div>
+                    </td>
+                    <td class="p-4">
+                        <span class="text-teal-400">Finished</span>
+                    </td>
+                    <td class="p-4">
+                        <div>
+                            <div>2:16:04 AM</div>
+                            <div class="text-gray-500">10/26/2024</div>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- Signal Row 2 -->
+                <tr class="border-t border-gray-800 hover:bg-[#1c2c4f]">
+                    <td class="p-4">
+                        <div class="flex items-center space-x-2">
+                            <span>🔴</span>
+                            <span>ETH SIGNAL</span>
+                            <div class="flex items-center space-x-1">
+                                <img src="/exchange-icon.png" class="w-4 h-4" alt="Exchange">
+                                <span class="bg-amber-500/30 text-amber-500 px-1 rounded text-xs">
+                                    x10
+                                </span>
+                                <i data-lucide="info" class="w-4 h-4 text-gray-500"></i>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="p-4">
+                        <span class="px-2 py-1 rounded bg-red-500/20 text-red-400">
+                            Sell
+                        </span>
+                    </td>
+                    <td class="p-4">
+                        <div>
+                            <div>2:18:01 AM</div>
+                            <div class="text-gray-500">10/26/2024</div>
+                        </div>
+                    </td>
+                    <td class="p-4">3258.5 USDT</td>
+                    <td class="p-4">
+                        <span class="text-teal-400">Completed</span>
+                    </td>
+                    <td class="p-4">3262 USDT</td>
+                    <td class="p-4">
+                        <div>
+                            <div>0.15 ETHUSDT</div>
+                            <div class="text-gray-500">489.3 USDT</div>
+                        </div>
+                    </td>
+                    <td class="p-4">
+                        <span class="text-teal-400">Finished</span>
+                    </td>
+                    <td class="p-4">
+                        <div>
+                            <div>2:18:04 AM</div>
+                            <div class="text-gray-500">10/26/2024</div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="p-4 flex items-center space-x-2">
+        <select class="bg-[#1c2c4f] rounded px-3 py-2">
+            <option>10</option>
+            <option>25</option>
+            <option>50</option>
+        </select>
+        <span class="px-3 py-1 bg-teal-500 rounded">1</span>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Toggle buttons functionality
+        document.querySelectorAll('.flex button').forEach(button => {
+            button.addEventListener('click', function() {
+                const parent = this.parentElement;
+                parent.querySelectorAll('button').forEach(btn => {
+                    btn.classList.remove('bg-[#1c2c4f]');
+                    btn.classList.add('bg-transparent');
+                });
+                this.classList.remove('bg-transparent');
+                this.classList.add('bg-[#1c2c4f]');
+            });
+        });
+    </script>
+</body>
+</html>

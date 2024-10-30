@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signal Bots Dashboard</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-[#1a1f2e] text-white">
+    <!-- Top Navigation -->
+    <nav class="bg-[#1c2c4f] border-b border-gray-700 p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-xl font-bold">Trading Platform</h1>
+            <div class="flex items-center space-x-4">
+                <button class="p-2 hover:bg-gray-700 rounded">
+                    <i data-lucide="bell"></i>
+                </button>
+                <button class="p-2 hover:bg-gray-700 rounded">
+                    <i data-lucide="user"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex">
+        <!-- Sidebar -->
+        <div class="w-64 bg-[#1c2c4f] min-h-screen p-4">
+            <div class="space-y-4">
+                <div class="flex items-center space-x-3 p-2 hover:bg-gray-700 rounded cursor-pointer">
+                    <i data-lucide="activity"></i>
+                    <span>Dashboard</span>
+                </div>
+                <div class="flex items-center space-x-3 p-2 hover:bg-gray-700 rounded cursor-pointer">
+                    <i data-lucide="trending-up"></i>
+                    <span>Trading</span>
+                </div>
+                <div class="flex items-center space-x-3 p-2 bg-gray-700 rounded cursor-pointer">
+                    <i data-lucide="zap"></i>
+                    <span>Signal Bots</span>
+                </div>
+                <div class="flex items-center space-x-3 p-2 hover:bg-gray-700 rounded cursor-pointer">
+                    <i data-lucide="settings"></i>
+                    <span>Settings</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-6">
+            <!-- Header Actions -->
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-semibold">Signal Bots</h1>
+                <button 
+                    onclick="openCreateBotModal()"
+                    class="bg-emerald-600 hover:bg-emerald-700 px-4 py-2 rounded-lg flex items-center"
+                >
+                    <i data-lucide="plus-circle" class="w-4 h-4 mr-2"></i>
+                    Create Bot
+                </button>
+            </div>
+
+            <!-- Active Bots Overview -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <!-- Bot Stat Card 1 -->
+                <div class="bg-[#1c2c4f] rounded-lg p-4">
+                    <h3 class="text-gray-400 text-sm">Active Bots</h3>
+                    <div class="mt-2 flex items-baseline">
+                        <p class="text-2xl font-semibold">5</p>
+                        <span class="ml-2 text-sm text-green-500">+2</span>
+                    </div>
+                </div>
+                
+                <!-- Bot Stat Card 2 -->
+                <div class="bg-[#1c2c4f] rounded-lg p-4">
+                    <h3 class="text-gray-400 text-sm">Total Signals Today</h3>
+                    <div class="mt-2 flex items-baseline">
+                        <p class="text-2xl font-semibold">28</p>
+                        <span class="ml-2 text-sm text-green-500">+12</span>
+                    </div>
+                </div>
+
+                <!-- Bot Stat Card 3 -->
+                <div class="bg-[#1c2c4f] rounded-lg p-4">
+                    <h3 class="text-gray-400 text-sm">Success Rate</h3>
+                    <div class="mt-2 flex items-baseline">
+                        <p class="text-2xl font-semibold">85.7%</p>
+                        <span class="ml-2 text-sm text-green-500">+5.2%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bot List -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Bot Card 1 -->
+                <div class="bg-[#1c2c4f] rounded-lg p-4">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="font-medium">BTC Futures Bot</h3>
+                            <p class="text-sm text-gray-400">BTCUSDT</p>
+                        </div>
+                        <span class="px-2 py-1 rounded-full text-xs bg-green-500/20 text-green-400">
+                            active
+                        </span>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-4 text-sm">
+                        <div>
+                            <p class="text-gray-400">Signals Today</p>
+                            <p class="font-medium">12</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-400">Success Rate</p>
+                            <p class="font-medium">85%</p>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="text-gray-400">Last Signal: 2 min ago</span>
+                        <button class="text-emerald-500 hover:text-emerald-400">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Add more bot cards here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Bot Modal -->
+    <div id="createBotModal" class="modal">
+        <div class="bg-[#1c2c4f] rounded-lg w-full max-w-2xl p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold">Create Signal Bot</h2>
+                <button onclick="closeCreateBotModal()" class="text-gray-400 hover:text-white">✕</button>
+            </div>
+
+            <!-- Steps Indicator -->
+            <div class="flex justify-between mb-8">
+                <div class="flex items-center flex-1">
+                    <div class="w-8 h-8 rounded-full bg-emerald-600 flex items-center justify-center">1</div>
+                    <div class="flex-1 h-1 mx-2 bg-emerald-600"></div>
+                </div>
+                <div class="flex items-center flex-1">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center">2</div>
+                    <div class="flex-1 h-1 mx-2 bg-gray-700"></div>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center">3</div>
+                </div>
+            </div>
+
+            <!-- Step 1 Content -->
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-lg mb-4">Set Webhook URL</h3>
+                    <div class="bg-[#2d4a7c] p-4 rounded-lg flex items-center">
+                        <code class="flex-1">https://api.yourbot.com/webhook/signals</code>
+                        <button class="ml-2 text-emerald-500 hover:text-emerald-400">Copy</button>
+                    </div>
+                </div>
+                <button class="w-full bg-emerald-600 hover:bg-emerald-700 py-2 rounded-lg">
+                    Continue
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Modal functions
+        function openCreateBotModal() {
+            document.getElementById('createBotModal').classList.add('active');
+        }
+
+        function closeCreateBotModal() {
+            document.getElementById('createBotModal').classList.remove('active');
+        }
+    </script>
+</body>
+</html>

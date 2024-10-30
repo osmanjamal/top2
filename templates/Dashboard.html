@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Dashboard</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Trading View Widget -->
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+</head>
+<body class="min-h-screen bg-[#1a1f2e] text-white">
+    <div class="flex">
+        <!-- Sidebar -->
+        <div class="w-64 bg-[#1c2c4f] min-h-screen p-4">
+            <div class="mb-8">
+                <h1 class="text-xl font-bold">Trading Platform</h1>
+            </div>
+            <div class="space-y-2">
+                <a href="dashboard.html" class="flex items-center space-x-3 p-2 bg-[#2d4a7c] rounded-lg text-white">
+                    <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="signals.html" class="flex items-center space-x-3 p-2 hover:bg-[#2d4a7c] rounded-lg text-gray-400 hover:text-white">
+                    <i data-lucide="signal" class="w-5 h-5"></i>
+                    <span>Signals</span>
+                </a>
+                <a href="settings.html" class="flex items-center space-x-3 p-2 hover:bg-[#2d4a7c] rounded-lg text-gray-400 hover:text-white">
+                    <i data-lucide="settings" class="w-5 h-5"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="api-connection.html" class="flex items-center space-x-3 p-2 hover:bg-[#2d4a7c] rounded-lg text-gray-400 hover:text-white">
+                    <i data-lucide="key" class="w-5 h-5"></i>
+                    <span>API Keys</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-6">
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h1 class="text-2xl font-semibold">Dashboard</h1>
+                    <p class="text-gray-400">Welcome back, Trader</p>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 hover:bg-[#2d4a7c] rounded-lg">
+                        <i data-lucide="bell" class="w-5 h-5"></i>
+                    </button>
+                    <button class="flex items-center space-x-2 p-2 hover:bg-[#2d4a7c] rounded-lg">
+                        <i data-lucide="user" class="w-5 h-5"></i>
+                        <span>Profile</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Overview -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                <div class="bg-[#1c2c4f] p-4 rounded-lg">
+                    <div class="flex justify-between items-start mb-2">
+                        <p class="text-gray-400">Total Balance</p>
+                        <i data-lucide="dollar-sign" class="w-5 h-5 text-emerald-500"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold">$25,845.65</h3>
+                    <p class="text-sm text-emerald-500">+2.5% today</p>
+                </div>
+
+                <div class="bg-[#1c2c4f] p-4 rounded-lg">
+                    <div class="flex justify-between items-start mb-2">
+                        <p class="text-gray-400">Active Positions</p>
+                        <i data-lucide="trending-up" class="w-5 h-5 text-blue-500"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold">5</h3>
+                    <p class="text-sm text-blue-500">3 in profit</p>
+                </div>
+
+                <div class="bg-[#1c2c4f] p-4 rounded-lg">
+                    <div class="flex justify-between items-start mb-2">
+                        <p class="text-gray-400">Active Bots</p>
+                        <i data-lucide="cpu" class="w-5 h-5 text-purple-500"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold">8</h3>
+                    <p class="text-sm text-purple-500">2 new signals</p>
+                </div>
+
+                <div class="bg-[#1c2c4f] p-4 rounded-lg">
+                    <div class="flex justify-between items-start mb-2">
+                        <p class="text-gray-400">Success Rate</p>
+                        <i data-lucide="percent" class="w-5 h-5 text-amber-500"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold">78.5%</h3>
+                    <p class="text-sm text-amber-500">Last 30 days</p>
+                </div>
+            </div>
+
+            <!-- Main Chart -->
+            <div class="bg-[#1c2c4f] p-4 rounded-lg mb-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-medium">BTC/USDT</h2>
+                    <div class="flex space-x-2">
+                        <button class="px-3 py-1 bg-[#2d4a7c] rounded-lg text-sm">1H</button>
+                        <button class="px-3 py-1 bg-[#2d4a7c] rounded-lg text-sm">4H</button>
+                        <button class="px-3 py-1 bg-emerald-600 rounded-lg text-sm">1D</button>
+                        <button class="px-3 py-1 bg-[#2d4a7c] rounded-lg text-sm">1W</button>
+                    </div>
+                </div>
+                <div id="tradingview_chart" style="height: 400px;"></div>
+            </div>
+
+            <!-- Active Positions & Recent Signals -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Active Positions -->
+                <div class="bg-[#1c2c4f] rounded-lg p-4">
+                    <h2 class="text-lg font-medium mb-4">Active Positions</h2>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 bg-[#2d4a7c] rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <div class="bg-green-500/20 text-green-400 px-2 py-1 rounded">Long</div>
+                                <div>
+                                    <h4 class="font-medium">BTC/USDT</h4>
+                                    <p class="text-sm text-gray-400">Entry: $67,245</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-emerald-500">+2.45%</p>
+                                <p class="text-sm text-gray-400">0.15 BTC</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 bg-[#2d4a7c] rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <div class="bg-red-500/20 text-red-400 px-2 py-1 rounded">Short</div>
+                                <div>
+                                    <h4 class="font-medium">ETH/USDT</h4>
+                                    <p class="text-sm text-gray-400">Entry: $3,245</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-red-500">-1.23%</p>
+                                <p class="text-sm text-gray-400">2.5 ETH</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Signals -->
+                <div class="bg-[#1c2c4f] rounded-lg p-4">
+                    <h2 class="text-lg font-medium mb-4">Recent Signals</h2>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 bg-[#2d4a7c] rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <i data-lucide="arrow-up-right" class="w-5 h-5 text-green-500"></i>
+                                <div>
+                                    <h4 class="font-medium">BTC Signal Bot</h4>
+                                    <p class="text-sm text-gray-400">2 minutes ago</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-green-500">Buy Signal</p>
+                                <p class="text-sm text-gray-400">$67,245</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 bg-[#2d4a7c] rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <i data-lucide="arrow-down-right" class="w-5 h-5 text-red-500"></i>
+                                <div>
+                                    <h4 class="font-medium">ETH Signal Bot</h4>
+                                    <p class="text-sm text-gray-400">15 minutes ago</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-red-500">Sell Signal</p>
+                                <p class="text-sm text-gray-400">$3,245</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Initialize TradingView Widget
+        new TradingView.widget({
+            "width": "100%",
+            "height": "100%",
+            "symbol": "BINANCE:BTCUSDT",
+            "interval": "D",
+            "timezone": "Etc/UTC",
+            "theme": "dark",
+            "style": "1",
+            "locale": "en",
+            "toolbar_bg": "#1c2c4f",
+            "enable_publishing": false,
+            "hide_top_toolbar": true,
+            "hide_legend": true,
+            "save_image": false,
+            "container_id": "tradingview_chart"
+        });
+    </script>
+</body>
+</html>
