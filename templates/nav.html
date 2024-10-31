@@ -1,0 +1,183 @@
+<!-- Previous nav code remains the same -->
+
+<script>
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize Feather icons
+        feather.replace();
+    
+        // Check for saved dark mode preference
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.documentElement.classList.add('dark');
+        }
+    
+        // Start nav stats update interval
+        updateNavStats();
+        setInterval(updateNavStats, 30000); // Update every 30 seconds
+    });
+    
+    // Mobile menu functionality
+    function toggleMobileMenu() {
+        const nav = document.querySelector('nav');
+        const mainContent = document.querySelector('.main-content');
+        
+        nav.classList.toggle('-translate-x-full');
+        mainContent.classList.toggle('ml-0');
+    }
+    
+    // Responsive handling
+    function handleResize() {
+        const nav = document.querySelector('nav');
+        const mainContent = document.querySelector('.main-content');
+        
+        if (window.innerWidth < 768) { // Mobile breakpoint
+            nav.classList.add('-translate-x-full');
+            mainContent.classList.add('ml-0');
+        } else {
+            nav.classList.remove('-translate-x-full');
+            mainContent.classList.remove('ml-0');
+        }
+    }
+    
+    // Add resize listener
+    window.addEventListener('resize', handleResize);
+    
+    // Dropdown functionality
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('dropdownData', () => ({
+            open: false,
+            toggle() {
+                this.open = !this.open;
+            },
+            close() {
+                this.open = false;
+            }
+        }));
+    });
+    
+    // Active link handling
+    function setActiveLink() {
+        const currentPath = window.location.pathname;
+        const links = document.querySelectorAll('nav a');
+        
+        links.forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('bg-[#2d4a7c]', 'text-white');
+            } else {
+                link.classList.remove('bg-[#2d4a7c]', 'text-white');
+            }
+        });
+    }
+    
+    // Real-time balance update animation
+    function updateBalance(newBalance, oldBalance) {
+        const balanceElement = document.getElementById('total-balance');
+        
+        balanceElement.classList.add('updating');
+        setTimeout(() => {
+            balanceElement.textContent = `$${newBalance.toFixed(2)}`;
+            balanceElement.classList.remove('updating');
+            
+            if (newBalance > oldBalance) {
+                balanceElement.classList.add('increase');
+            } else if (newBalance < oldBalance) {
+                balanceElement.classList.add('decrease');
+            }
+            
+            setTimeout(() => {
+                balanceElement.classList.remove('increase', 'decrease');
+            }, 1000);
+        }, 200);
+    }
+    
+    // Add notification badge
+    function updateNotificationBadge(count) {
+        const badge = document.querySelector('.notification-badge');
+        if (count > 0) {
+            badge.textContent = count;
+            badge.classList.remove('hidden');
+        } else {
+            badge.classList.add('hidden');
+        }
+    }
+    
+    // WebSocket connection for real-time updates
+    function initializeWebSocket() {
+        const ws = new WebSocket(WEBSOCKET_URL);
+        
+        ws.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            
+            if (data.type === 'balance_update') {
+                updateBalance(data.newBalance, data.oldBalance);
+            } else if (data.type === 'position_update') {
+                updateNavStats();
+            } else if (data.type === 'notification') {
+                updateNotificationBadge(data.count);
+            }
+        };
+        
+        ws.onclose = function() {
+            // Attempt to reconnect after 5 seconds
+            setTimeout(initializeWebSocket, 5000);
+        };
+    }
+    
+    // Add custom styles for animations
+    const style = document.createElement('style');
+    style.textContent = `
+        .updating {
+            opacity: 0.5;
+            transition: opacity 0.2s;
+        }
+        
+        .increase {
+            color: #10b981;
+            transition: color 0.3s;
+        }
+        
+        .decrease {
+            color: #ef4444;
+            transition: color 0.3s;
+        }
+        
+        @media (max-width: 768px) {
+            nav {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease-in-out;
+            }
+            
+            nav.mobile-open {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                transition: margin-left 0.3s ease-in-out;
+            }
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            min-width: 18px;
+            height: 18px;
+            border-radius: 9px;
+            background-color: #ef4444;
+            color: white;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 5px;
+        }
+    `;
+    
+    document.head.appendChild(style);
+    
+    // Initialize everything
+    initializeWebSocket();
+    setActiveLink();
+    handleResize();
+    </script>
