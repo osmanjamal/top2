@@ -5,11 +5,11 @@ from flask import (
 from functools import wraps
 from binance.client import Client
 from binance.exceptions import BinanceAPIException
-import config
+import app.config as config
 import json
 from datetime import datetime, timedelta
 import pandas as pd
-from functions import BinanceAPI
+from app.functions import BinanceAPI
 
 # ======= Authentication Decorator =======
 def login_required(f):

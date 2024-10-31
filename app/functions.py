@@ -11,20 +11,18 @@ import config
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    format='%(asctime)s - %(name)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
 
 class BinanceAPI:
     def __init__(self, api_key=None, api_secret=None):
-        """Initialize Binance API client"""
         self.api_key = api_key or config.api_key
         self.api_secret = api_secret or config.api_secret
         self.client = None
-        self.initialize_client()
+        self.initialize()
 
-    def initialize_client(self):
-        """Initialize Binance client"""
+    def initialize(self):
         try:
             self.client = Client(self.api_key, self.api_secret)
             return True
@@ -32,8 +30,7 @@ class BinanceAPI:
             logger.error(f"Failed to initialize Binance client: {e}")
             return False
 
-    def get_account_info(self):
-        """Get futures account information"""
+    def get_account_balance(self):
         try:
             account = self.client.futures_account()
             return {

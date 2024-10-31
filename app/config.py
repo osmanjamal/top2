@@ -16,13 +16,7 @@ tg_token = ''
 tg_channel = ''
 
 # Trading pairs configuration
-trading_pairs = [
-    'BTCUSDT',
-    'ETHUSDT',
-    'BNBUSDT',
-    'XRPUSDT',
-    'DOGEUSDT'
-]
+
 
 # Risk management
 max_daily_trades = 10
@@ -36,3 +30,10 @@ webhook_secret = 'your_webhook_secret_here'  # Used to verify webhook requests
 # Database Configuration
 use_database = False  # Set to True if you want to use a database instead of JSON files
 database_url = 'sqlite:///trading.db'  # SQLite database path
+
+# Basic configuration
+SECRET_KEY = 'your-secret-key-here'
+SESSION_TYPE = 'filesystem'
+
+
+trading_pairs = ['BTCUSDT', 'ETHUSDT']
