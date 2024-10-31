@@ -1,7 +1,6 @@
-from flask import (
-    render_template, request, redirect, 
-    url_for, flash, jsonify, session
-)
+from app import app 
+from flask import render_template, request, redirect, url_for, flash
+
 from functools import wraps
 from binance.client import Client
 from binance.exceptions import BinanceAPIException
@@ -10,7 +9,6 @@ import json
 from datetime import datetime, timedelta
 import pandas as pd
 from app.functions import BinanceAPI
-
 # ======= Authentication Decorator =======
 def login_required(f):
     @wraps(f)
@@ -24,6 +22,7 @@ def login_required(f):
 # ======= Authentication Routes =======
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')

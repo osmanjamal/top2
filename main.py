@@ -1,4 +1,3 @@
-# 1. Basic Imports
 from flask import Flask, request, render_template, redirect, url_for, flash, jsonify
 from flask_session import Session
 from binance.client import Client
@@ -6,20 +5,20 @@ from binance.exceptions import BinanceAPIException
 import json
 import logging
 import pandas as pd
-from datetime import datetime
+from datetime import  datetime
 import threading
 import time
-
 import sys
 import os
 
 # إضافة المجلد الحالي إلى مسار Python
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from app import app
 
 if __name__ == '__main__':
     app.run(debug=True)
+
 
 # 2. Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -34,16 +33,9 @@ app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
 
 # 5. Import local modules (after app initialization)
-import app.config as config
-from app.functions import (
-    BinanceAPI,  # نستورد الكلاس بدلاً من الدوال المنفردة
-    read_auth_file,
-    write_auth_file,
-    ip_address
-)
 
 # 6. Initialize Binance API
-binance_client = BinanceAPI()
+#binance_client = BinanceAPI()
 
 # 7. Check config
 if not hasattr(config, 'webhook_secret'):

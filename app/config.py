@@ -34,6 +34,7 @@ database_url = 'sqlite:///trading.db'  # SQLite database path
 # Basic configuration
 SECRET_KEY = 'your-secret-key-here'
 SESSION_TYPE = 'filesystem'
+webhook_secret = 'your-webhook-secret'
 
 
 trading_pairs = ['BTCUSDT', 'ETHUSDT']

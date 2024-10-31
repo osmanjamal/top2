@@ -6,7 +6,7 @@ import hmac
 import hashlib
 from datetime import datetime
 import logging
-import config
+import app.config as config
 
 # Configure logging
 logging.basicConfig(
